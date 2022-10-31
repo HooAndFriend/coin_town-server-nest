@@ -12,7 +12,6 @@ async function bootstrap() {
     credentials: true,
   })
   app.useGlobalPipes(new ValidationPipe())
-
   await app.listen(process.env.NODE_SERVER_PORT)
 }
 bootstrap()
