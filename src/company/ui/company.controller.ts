@@ -18,18 +18,19 @@ export class CompanyController {
     }
 
     @Get('/:id')
-    async findByIdx(@Param('id') idx: number) {
-        return await this.CompanyService.findByIdx(idx);
+    async findByIdx(@Param('id') idx: string) {
+        console.log(typeof(idx));
+        return await this.CompanyService.findByIdx(Number(idx));
     }
 
     @Patch('/:id')
     async update(@Param('id') idx: number, @Body() body) {
-        return await this.CompanyService.update(idx, body);
+        return await this.CompanyService.update(Number(idx), body);
     }
 
     @Delete('/:id')
     async delete(@Param('id') idx: number) {
-        return await this.CompanyService.delete(idx);
+        return await this.CompanyService.delete(Number(idx));
     }   
 
 }
