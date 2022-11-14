@@ -8,7 +8,8 @@ import { User } from '../domain/user.entity'
 export class AuthService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async localSave(body: LocalSaveDto) {
+  /** Local User 저장 */
+  async localSave(body: LocalSaveDto): Promise<User> {
     try {
       const findUser: User = await this.userRepository.findOne({
         where: { email: body.email },
@@ -31,7 +32,8 @@ export class AuthService {
     }
   }
 
-  async localLogin(email: string, password: string) {
+  /** Local User Login */
+  async localLogin(email: string, password: string): Promise<User> {
     try {
       const user = await this.userRepository.findOne({ where: { email } })
       await this.compareBcrypt(password, user.password)
@@ -39,6 +41,16 @@ export class AuthService {
     } catch (err) {
       console.log(err)
       throw new HttpException('Not Found', HttpStatus.BAD_REQUEST)
+    }
+  }
+
+  /** Idx를 이용한 User 조회 */
+  async getUserByIdx(idx: number) {
+    try {
+      return this.userRepository.findOne({ where: { idx } })
+    } catch (err) {
+      console.log(err)
+      throw new HttpException('NOT FOUND', HttpStatus.NOT_FOUND)
     }
   }
 
