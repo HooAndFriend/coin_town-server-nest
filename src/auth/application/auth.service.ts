@@ -3,10 +3,14 @@ import { LocalSaveDto } from '../dto/user.save.dto'
 import { UserRepository } from '../infrastructure/user.repository'
 import * as bcrypt from 'bcryptjs'
 import { User } from '../domain/user.entity'
+import { JwtService } from '@nestjs/jwt'
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly jwtService: JwtService,
+  ) {}
 
   /** Local User 저장 */
   async localSave(body: LocalSaveDto): Promise<User> {
@@ -54,10 +58,16 @@ export class AuthService {
     }
   }
 
+  /** Passport 암호화 compare */
   async compareBcrypt(password: string, hash: string) {
     const result = await bcrypt.compare(password, hash)
     console.log(result)
     if (!result)
       throw new HttpException('Password ERROR', HttpStatus.BAD_REQUEST)
+  }
+
+  /** Jwt를 이용하여 Token 발급 */
+  async gwtJwtWithIdx(idx: number) {
+    return this.jwtService.sign({ idx })
   }
 }
