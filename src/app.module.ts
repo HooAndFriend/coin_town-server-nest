@@ -2,7 +2,8 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config/dist/config.module'
 import { AuthModule } from './auth/auth.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { CompanyModule } from './company/company.module';
+import { CompanyModule } from './company/company.module'
+import { BoardModule } from './board/board.module'
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { CompanyModule } from './company/company.module';
     }),
     AuthModule,
     CompanyModule,
+    BoardModule,
   ],
   controllers: [],
   providers: [],
