@@ -7,9 +7,9 @@ export class Company extends BaseTimeEntity {
     @PrimaryGeneratedColumn()
     idx: number
 
-    @Column()
+    @Column({ type: 'varchar', length: 50 })
     name: string
 
-    @Column()
+    @Column({ type: 'varchar', length: 120 })
     imgPath: string
 }
